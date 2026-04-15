@@ -1,0 +1,18 @@
+{
+  "name": "saucedemo-smoke-suite",
+  "version": "1.0.0",
+  "description": "E-Commerce Smoke Suite for SauceDemo using Playwright and TypeScript",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:trace": "playwright test --trace on",
+    "setup": "playwright test --project=setup"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "@types/node": "^20.12.0",
+    "typescript": "^5.4.0"
+  }
+}

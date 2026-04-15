@@ -1,0 +1,14 @@
+node_modules/
+dist/
+package-lock.json
+
+# Playwright output
+playwright-report/
+test-results/
+
+# Auth state — contains session tokens, never commit
+auth/storageState.json
+
+# OS artifacts
+.DS_Store
+Thumbs.db
