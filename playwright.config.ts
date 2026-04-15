@@ -23,7 +23,7 @@ export default defineConfig({
   /* Reporter: HTML report + built-in list output */
   reporter: [
     ['list'],
-    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+    ['html', { outputFolder: 'playwright-report', open: process.env.CI ? 'never' : 'always' }],
   ],
 
   use: {

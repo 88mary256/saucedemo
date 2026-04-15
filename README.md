@@ -63,7 +63,7 @@ saucedemo/
 ├── .github/
 │   └── workflows/
 │       └── playwright.yml            # GitHub Actions CI workflow
-├── auth/
+├── .auth/
 │   └── storageState.json             # Saved auth session (auto-generated, git-ignored)
 ├── .env                              # Real credentials — git-ignored, do not commit
 ├── .env.sample                       # Sample credentials — committed, copy to create .env
@@ -89,19 +89,21 @@ saucedemo/
 
 | Command | Description |
 |---|---|
-| `npm test` | Run all tests headlessly across all browsers |
+| `npx playwright test` | Run all tests directly via Playwright CLI |
+| `npm test` | Run all tests via npm script (same as above) |
 | `npm run test:headed` | Run with visible browser windows |
 | `npm run test:ui` | Open Playwright UI mode |
 | `npm run test:trace` | Run with trace enabled on every test |
-| `npm run test:report` | Open the last HTML report |
+| `npx playwright show-report` | Open the last HTML report manually |
+| `npm run test:report` | Open the last HTML report via npm script |
 
 ---
 
 ## Authentication Strategy
 
-The `auth.setup.ts` file runs once before all tests. It logs in to SauceDemo and saves the browser session (cookies + localStorage) to `auth/storageState.json`. All three browser projects reuse this file — avoiding repeated logins on every test.
+The `auth.setup.ts` file runs once before all tests. It logs in to SauceDemo and saves the browser session (cookies + localStorage) to `.auth/storageState.json`. All three browser projects reuse this file — avoiding repeated logins on every test.
 
-> `auth/storageState.json` is listed in `.gitignore` and should never be committed.
+> `.auth/storageState.json` is listed in `.gitignore` and should never be committed.
 
 ---
 
