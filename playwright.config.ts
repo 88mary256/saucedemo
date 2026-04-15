@@ -7,20 +7,10 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
-
-  /* Run all tests in parallel */
   fullyParallel: true,
-
-  /* Fail the build on CI if test.only is left in source */
   forbidOnly: !!process.env.CI,
-
-  /* Retry once on CI, no retries locally */
-  retries: process.env.CI ? 1 : 0,
-
-  /* Limit parallel workers on CI */
+  retries: 1,
   workers: process.env.CI ? 2 : undefined,
-
-  /* Reporter: HTML report + built-in list output */
   reporter: [
     ['list'],
     ['html', { outputFolder: 'playwright-report', open: process.env.CI ? 'never' : 'always' }],
@@ -29,7 +19,7 @@ export default defineConfig({
   use: {
     /* Base URL for all tests */
     baseURL: 'https://www.saucedemo.com',
-    headless: false,
+    headless: !!process.env.CI,
     trace: 'on',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -54,7 +44,7 @@ export default defineConfig({
         storageState: '.auth/storageState.json',
       },
       dependencies: ['setup'],
-    },/*
+    },
     {
       name: 'firefox',
       use: {
@@ -70,6 +60,6 @@ export default defineConfig({
         storageState: '.auth/storageState.json',
       },
       dependencies: ['setup'],
-    },*/
+    },
   ],
 });
