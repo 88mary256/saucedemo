@@ -31,11 +31,25 @@ npm install
 
 ### 2. Install Playwright browser binaries
 
-Downloads Chromium, Firefox, and WebKit to the local Playwright cache (`%USERPROFILE%\AppData\Local\ms-playwright` on Windows). This does **not** affect other projects or global configurations.
+Downloads Chromium, Firefox, and WebKit to the local Playwright cache.
+This does **not** affect other projects or global configurations.
 
 ```bash
 npx playwright install
 ```
+
+### 3. Set up test credentials
+
+Copy the sample env file and fill in the real values:
+
+```bash
+cp .env.sample .env
+```
+
+Then open `.env` and replace `YOUR_PASSWORD` with the actual password.
+
+> `.env` is listed in `.gitignore` and must **never** be committed.
+> Playwright 1.45+ loads `.env` automatically — no extra dependencies needed.
 
 ---
 
@@ -43,25 +57,30 @@ npx playwright install
 
 ```
 saucedemo/
-├── playwright.config.ts        # Cross-browser config, storageState, trace & report settings
+├── playwright.config.ts              # Cross-browser config, storageState, trace & report
 ├── package.json
 ├── tsconfig.json
+├── .github/
+│   └── workflows/
+│       └── playwright.yml            # GitHub Actions CI workflow
 ├── auth/
-│   └── storageState.json       # Saved auth session (auto-generated, git-ignored)
+│   └── storageState.json             # Saved auth session (auto-generated, git-ignored)
+├── .env                              # Real credentials — git-ignored, do not commit
+├── .env.sample                       # Sample credentials — committed, copy to create .env
 ├── src/
-│   ├── pages/                  # Page Object Model (POM)
-│   │   ├── BasePage.ts
-│   │   ├── LoginPage.ts
-│   │   ├── InventoryPage.ts
-│   │   ├── CartPage.ts
-│   │   └── CheckoutPage.ts
+│   ├── pages/                        # Page Object Model (POM)
+│   │   ├── BasePage.ts               # Abstract base with shared helpers
+│   │   ├── LoginPage.ts              # Login page (/)
+│   │   ├── InventoryPage.ts          # Products page (/inventory.html)
+│   │   ├── CartPage.ts               # Cart page (/cart.html)
+│   │   └── CheckoutPage.ts           # Checkout steps one, two & complete
 │   └── utils/
-│       └── testData.ts         # Credentials and test data constants
+│       └── testData.ts               # Typed user credentials and checkout data (reads from .env)
 └── tests/
-    ├── auth.setup.ts           # Global auth setup — saves storageState
-    ├── login.spec.ts
-    ├── cart.spec.ts
-    └── checkout.spec.ts
+    ├── auth.setup.ts                 # Global auth setup — logs in and saves storageState
+    ├── login.spec.ts                 # Login flow tests
+    ├── cart.spec.ts                  # Add-to-cart tests
+    └── checkout.spec.ts              # Full checkout flow tests
 ```
 
 ---

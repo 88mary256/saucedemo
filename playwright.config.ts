@@ -29,15 +29,10 @@ export default defineConfig({
   use: {
     /* Base URL for all tests */
     baseURL: 'https://www.saucedemo.com',
-
-    /* Collect trace on first retry to enable Trace Viewer debugging */
-    trace: 'on-first-retry',
-
-    /* Capture screenshot only on failure */
+    headless: false,
+    trace: 'on',
     screenshot: 'only-on-failure',
-
-    /* Capture video only on first retry */
-    video: 'on-first-retry',
+    video: 'retain-on-failure',
   },
 
   projects: [
@@ -56,15 +51,15 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         /* Reuse the authenticated session saved by the setup project */
-        storageState: 'auth/storageState.json',
+        storageState: '.auth/storageState.json',
       },
       dependencies: ['setup'],
-    },
+    },/*
     {
       name: 'firefox',
       use: {
         ...devices['Desktop Firefox'],
-        storageState: 'auth/storageState.json',
+        storageState: '.auth/storageState.json',
       },
       dependencies: ['setup'],
     },
@@ -72,9 +67,9 @@ export default defineConfig({
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
-        storageState: 'auth/storageState.json',
+        storageState: '.auth/storageState.json',
       },
       dependencies: ['setup'],
-    },
+    },*/
   ],
 });
